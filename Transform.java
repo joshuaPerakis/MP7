@@ -688,35 +688,41 @@ public class Transform {
 
     
     /**
-     * the.
-     * @param originalImage -
-     * @return -
+     *
+     * @param originalImage to convert into an inverse colored photo
+     * @param amount //extra
+     * @return Inverse/ negative photo
      */
-    public static int[][] inverse(final int[][] originalImage) {
-        int[][] changedImage = new int[originalImage.length][originalImage[0].length];
-
+    public static int[][] moreBlue(final int[][] originalImage, final int amount) {
+        final int mag0xff = 0xff;
+        final int magMax = 255;
+        final int alphaShifter = 24;
+        final int blueShifter = 16;
+        final int greenShifter = 8;
+        int[][] inverseImage = new int[originalImage.length][originalImage[0].length];
         for (int col = 0; col < originalImage.length; col++) {
             for (int row = 0; row < originalImage[col].length; row++) {
 
                 // & kinda deletes because and gate
-                int alpha = (originalImage[col][row] >> ALPHA_SHIFTER) & MAKE_IT_GOOD;
-                int blue = (originalImage[col][row] >> BLUE_SHIFTER) & MAKE_IT_GOOD;
-                int green = (originalImage[col][row] >> GREEN_SHIFTER) & MAKE_IT_GOOD;
-                int red = (originalImage[col][row]) & MAKE_IT_GOOD;
+                int alpha = (originalImage[col][row] >> alphaShifter) & mag0xff;
+                int blue = (originalImage[col][row] >> blueShifter) & mag0xff;
+                int green = (originalImage[col][row] >> greenShifter) & mag0xff;
+                int red = (originalImage[col][row]) & mag0xff;
 
-                red = MAX_VALUE - red;
-                green = MAX_VALUE - green;
-                blue = MAX_VALUE - blue;
+                red = magMax - red;
+                green = magMax - green;
+                blue = magMax - blue;
                 //alpha = MAX_VALUE - alpha
 
                 // | kind adds because or gate
-                changedImage[col][row] = (alpha << ALPHA_SHIFTER) | (blue << BLUE_SHIFTER)
-                        | (green << GREEN_SHIFTER) | (red);
+                inverseImage[col][row] = (alpha << alphaShifter) | (blue << blueShifter)
+                        | (green << greenShifter) | (red);
             }
         }
 
-        return changedImage;
+        return inverseImage;
     }
+
 
 
 
