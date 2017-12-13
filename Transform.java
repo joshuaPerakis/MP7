@@ -725,35 +725,40 @@ public class Transform {
 
 
 
-    /**
+     /**
      * the.
-     * @param originalImage -
-     * @return -
+     * @param originalImage and changes it
+     * @param amount //extra
+     * @return a completely random picture
      */
-    public static int[][] weird(final int[][] originalImage) { //idk if the void works here
+    public static int[][] lessAlpha(final int[][] originalImage, final int amount) {
+        final int alphaShifter = 24;
+        final int mag0xff = 0xff;
+        final int divisor = 3;
+        final int blueShifter = 16;
+        final int greenShifter = 8;
         int[][] changedImage = new int[originalImage.length][originalImage[0].length];
-
         for (int col = 0; col < originalImage.length; col++) {
             for (int row = 0; row < originalImage[col].length; row++) {
 
                 // & kinda deletes because and gate
-                int alpha = (originalImage[col][row] >> ALPHA_SHIFTER) & MAKE_IT_GOOD;
-                int blue = (originalImage[col][row] >> BLUE_SHIFTER) & MAKE_IT_GOOD;
-                int green = (originalImage[col][row] >> GREEN_SHIFTER) & MAKE_IT_GOOD;
-                int red = (originalImage[col][row]) & MAKE_IT_GOOD;
+                int alpha = (originalImage[col][row] >> alphaShifter) & mag0xff;
+                int blue = (originalImage[col][row] >> blueShifter) & mag0xff;
+                int green = (originalImage[col][row] >> greenShifter) & mag0xff;
+                int red = (originalImage[col][row]) & mag0xff;
 
-                int blend = (red + green + blue) / 3;
+                int blend = (red + green + blue) / (divisor);
                 red *= blend;
                 green *= blend;
                 blue *= blue;
 
                 // | kind adds because or gate
-                changedImage[col][row] = (alpha << ALPHA_SHIFTER) | (blue << BLUE_SHIFTER)
-                        | (green << GREEN_SHIFTER) | (red);
+                changedImage[col][row] = (alpha << alphaShifter) | (blue << blueShifter)
+                        | (green << greenShifter) | (red);
             }
         }
+        return changedImage;
     }
-
 
 
 
