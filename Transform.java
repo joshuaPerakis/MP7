@@ -207,7 +207,7 @@ public class Transform {
      * @param amount the amount of red to add
      * @return the recolored image
      */
-    public static int[][] moreRed(final int[][] originalImage, final int amount) {
+  /*  public static int[][] moreRed(final int[][] originalImage, final int amount) {
         final int mag24 = 24;
         final int mag16 = 16;
         final int mag8 = 8;
@@ -232,7 +232,7 @@ public class Transform {
         }
         return moreRedImage;
     }
-
+*/
 
     /**
      * @param originalImage the image to remove red to
@@ -628,7 +628,7 @@ public class Transform {
      * @param amount //extra
      * @return greyScaled image.
      */
-   /* public static int[][] moreRed(final int[][] originalImage, final int amount) {
+    public static int[][] moreRed(final int[][] originalImage, final int amount) {
            final int divisor = 3;
            final int mag16 = 16;
            final int mag8 = 8;
@@ -649,7 +649,7 @@ public class Transform {
            }
     return greyScaleImage;
        }
-*/
+
 
     /**
      *
