@@ -725,6 +725,34 @@ public class Transform {
 
 
 
+    /**
+     * the.
+     * @param originalImage -
+     * @return -
+     */
+    public static int[][] weird(final int[][] originalImage) { //idk if the void works here
+        int[][] changedImage = new int[originalImage.length][originalImage[0].length];
+
+        for (int col = 0; col < originalImage.length; col++) {
+            for (int row = 0; row < originalImage[col].length; row++) {
+
+                // & kinda deletes because and gate
+                int alpha = (originalImage[col][row] >> ALPHA_SHIFTER) & MAKE_IT_GOOD;
+                int blue = (originalImage[col][row] >> BLUE_SHIFTER) & MAKE_IT_GOOD;
+                int green = (originalImage[col][row] >> GREEN_SHIFTER) & MAKE_IT_GOOD;
+                int red = (originalImage[col][row]) & MAKE_IT_GOOD;
+
+                int blend = (red + green + blue) / 3;
+                red *= blend;
+                green *= blend;
+                blue *= blue;
+
+                // | kind adds because or gate
+                changedImage[col][row] = (alpha << ALPHA_SHIFTER) | (blue << BLUE_SHIFTER)
+                        | (green << GREEN_SHIFTER) | (red);
+            }
+        }
+    }
 
 
 
